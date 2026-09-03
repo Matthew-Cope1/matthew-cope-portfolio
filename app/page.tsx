@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import SkillCard from "./components/SkillCard";
 import ProjectCard from "./components/ProjectCard";
 import ExperienceItem from "./components/ExperienceItem";
-
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -177,6 +177,72 @@ export default function Home() {
     />
   </div>
 </section>
+
+<section className="mx-auto max-w-6xl py-20">
+  <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+    Education and Recognition
+  </p>
+
+  <h2 className="mt-4 text-4xl font-bold tracking-tight">
+    Continuing education supported by proven leadership
+  </h2>
+
+  <div className="mt-10 grid gap-6 md:grid-cols-2">
+    <article className="rounded-xl border border-slate-800 bg-slate-900 p-6">
+      <p className="text-sm font-semibold text-cyan-400">
+        Expected March 2027
+      </p>
+
+      <h3 className="mt-3 text-2xl font-semibold">
+        Bachelor of Science in Computer Science
+      </h3>
+
+      <p className="mt-2 text-slate-300">
+        Software Engineering Concentration
+      </p>
+
+      <p className="mt-4 leading-7 text-slate-400">
+        Southern New Hampshire University
+        <br />
+        GPA: 4.0
+      </p>
+    </article>
+
+    <article className="rounded-xl border border-slate-800 bg-slate-900 p-6">
+      <p className="text-sm font-semibold text-cyan-400">2025</p>
+
+      <h3 className="mt-3 text-2xl font-semibold">
+        Associate of Applied Science
+      </h3>
+
+      <p className="mt-2 text-slate-300">
+        Aircraft Maintenance Technology
+      </p>
+
+      <p className="mt-4 leading-7 text-slate-400">
+        Community College of the Air Force
+      </p>
+    </article>
+
+    <article className="rounded-xl border border-slate-800 bg-slate-900 p-6 md:col-span-2">
+      <p className="text-sm font-semibold text-cyan-400">
+        Professional Recognition
+      </p>
+
+      <h3 className="mt-3 text-2xl font-semibold">
+        Wing Standardization and Evaluation NCO of the Year
+      </h3>
+
+      <p className="mt-4 max-w-3xl leading-7 text-slate-400">
+        Recognized in 2024 for technical evaluation, program management,
+        standards compliance, and contributions to organizational readiness.
+      </p>
+    </article>
+  </div>
+</section>
+
+<Footer />
+
     </main>
   );
 }

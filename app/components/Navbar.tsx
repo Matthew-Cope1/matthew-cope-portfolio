@@ -17,6 +17,10 @@ export default function Navbar() {
         <a href="/#experience" className="transition hover:text-cyan-400">
           Experience
         </a>
+
+        <a href="/#contact" className="rounded-lg bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300"> 
+          Contact
+        </a>
       </div>
     </nav>
   );
