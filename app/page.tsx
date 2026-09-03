@@ -1,69 +1,182 @@
 import Image from "next/image";
+import Navbar from "./components/Navbar";
+import SkillCard from "./components/SkillCard";
+import ProjectCard from "./components/ProjectCard";
+import ExperienceItem from "./components/ExperienceItem";
+
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen bg-slate-950 px-6 py-20 text-white">
+
+      <Navbar />
+      
+      <section className="mx-auto max-w-6xl">
+        <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+          Software Engineering Portfolio
+        </p>
+
+        <h1 className="mt-6 max-w-4xl text-5xl font-bold tracking-tight">
+          Matthew Cope
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+          Computer science student and Air Force technical leader building
+          dependable software with C++, Java, Python, and modern web
+          technologies.
+        </p>
+      </section>
+
+      <section id="skills" className="mx-auto max-w-6xl py-20">
+  <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+    Technical Skills
+  </p>
+
+  <h2 className="mt-4 text-4xl font-bold tracking-tight">
+    See how I apply each skill
+  </h2>
+
+  <p className="mt-4 max-w-2xl leading-7 text-slate-400">
+    Select a skill to examine the projects, source code, design decisions,
+    and debugging techniques behind my work.
+  </p>
+
+  <div className="mt-10 grid gap-6 md:grid-cols-2">
+    <SkillCard
+      title="C++ Development"
+      description="Object-oriented applications, data structures, graphics, and systems-focused problem solving."
+      technologies={["C++", "OpenGL", "GLFW", "GLM"]}
+      href="/skills/cpp"
+    />
+
+    <SkillCard
+      title="Java Development"
+      description="Requirements-based development, automated testing, secure coding, and application services."
+      technologies={["Java", "JUnit", "Spring Boot", "SHA-256"]}
+      href="/skills/java"
+    />
+
+    <SkillCard
+      title="Python & Data Analysis"
+      description="Statistical analysis, visualization, data processing, and evidence-based conclusions."
+      technologies={["Python", "pandas", "SciPy", "Jupyter"]}
+      href="/skills/python"
+    />
+
+    <SkillCard
+      title="Web Development"
+      description="Responsive interfaces built with reusable components, typed data, and modern routing."
+      technologies={["React", "Next.js", "TypeScript", "Tailwind CSS"]}
+      href="/skills/web-development"
+    />
+  </div>
+</section>
+
+<section id="projects" className="mx-auto max-w-6xl py-20">
+  <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+    Selected Projects
+  </p>
+
+  <h2 className="mt-4 text-4xl font-bold tracking-tight">
+    Software built through coursework and independent development
+  </h2>
+
+  <p className="mt-4 max-w-2xl leading-7 text-slate-400">
+    Each project demonstrates a different part of my development process,
+    including design, implementation, testing, debugging, and documentation.
+  </p>
+
+  <div className="mt-10 grid gap-6 md:grid-cols-2">
+    <ProjectCard
+      title="Interactive 3D Graphics Application"
+      technology="C++ • OpenGL"
+      description="An interactive three-dimensional scene built with reusable objects, textures, lighting, transformations, and camera controls."
+      highlights={[
+        "Created reusable meshes and composite objects",
+        "Implemented keyboard and mouse camera movement",
+        "Debugged rendering, lighting, and texture problems",
+      ]}
+    />
+
+    <ProjectCard
+      title="Software Testing and Quality Assurance"
+      technology="Java • JUnit"
+      description="A collection of application services developed and tested from detailed software requirements."
+      highlights={[
+        "Created positive, negative, and boundary tests",
+        "Tested validation and exception behavior",
+        "Reached 87.7% code coverage",
+      ]}
+    />
+
+    <ProjectCard
+      title="Secure Software Refactoring"
+      technology="Java • Spring Boot"
+      description="A financial-services application reviewed and updated to improve data integrity and secure communication."
+      highlights={[
+        "Implemented SHA-256 checksum verification",
+        "Configured HTTPS communication",
+        "Reviewed dependencies for known vulnerabilities",
+      ]}
+    />
+
+    <ProjectCard
+      title="Course Planner"
+      technology="C++ • Data Structures"
+      description="A command-line application that loads, organizes, searches, and displays course information."
+      highlights={[
+        "Parsed structured data from an input file",
+        "Stored course information in a binary search tree",
+        "Implemented searching and sorted output",
+      ]}
+    />
+  </div>
+</section>
+<section id="experience" className="mx-auto max-w-6xl py-20">
+  <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+    Professional Experience
+  </p>
+
+  <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight">
+    Technical discipline developed in high-stakes environments
+  </h2>
+
+  <p className="mt-4 max-w-3xl leading-7 text-slate-400">
+    My professional background has taught me to interpret requirements,
+    troubleshoot complex systems, verify performance, document results, and
+    communicate clearly with technical teams and organizational leaders.
+  </p>
+
+  <div className="mt-10">
+    <ExperienceItem
+      dates="2026 — Present"
+      title="Technical Instructor and Evaluator"
+      organization="U.S. Air Force • C-146A Formal Training Unit"
+      description="Deliver standardized technical instruction and evaluate performance against qualification, safety, and mission-readiness requirements. Identify performance gaps, document results, and provide corrective feedback."
+    />
+
+    <ExperienceItem
+      dates="2025"
+      title="Operations Manager and Technical Evaluator"
+      organization="U.S. Air Force • Special Operations"
+      description="Led daily operations for 40 personnel while analyzing qualifications, requirements, constraints, and program risks. Evaluated performance against technical standards and recommended corrective actions."
+    />
+
+    <ExperienceItem
+      dates="2023 — 2025"
+      title="Program Manager and Technical Instructor"
+      organization="U.S. Air Force • Standardization and Evaluation"
+      description="Managed a technical evaluation program for 40 personnel. Directed inspection preparation by reviewing requirements, records, and organizational processes, contributing to an inspection with zero discrepancies."
+    />
+
+    <ExperienceItem
+      dates="2013 — 2019"
+      title="Aircraft Systems Technician"
+      organization="U.S. Air Force • Aircraft Fuel Systems"
+      description="Diagnosed and repaired aircraft-system discrepancies using technical documentation, schematics, inspection procedures, hardware testing, and systematic root-cause analysis."
+    />
+  </div>
+</section>
+    </main>
   );
 }
