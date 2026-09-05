@@ -11,7 +11,7 @@ type Skill = {
     title: string;
     overview: string;
     decisions: { title: string; description: string }[];
-    code?: { filename: string; caption: string; content: string };
+    code?: { filename: string; caption: string; content: string }[];
   };
 };
 
@@ -50,10 +50,23 @@ const skills: Record<string, Skill> = {
             "Next steps include testing the exact 10- and 50-character limits and verifying stored state after service operations. Defensive copies of mutable Date values would prevent callers from changing a date outside the validation methods; a controllable clock would make time-based tests more predictable.",
         },
       ],
-      code: {
+      code: [
+        {
+          filename: "AppointmentService.java",
+          caption:
+            "Excerpt from addAppointment, after its null check: an existing ID triggers an exception before the map is updated, preventing a duplicate from replacing the original appointment.",
+          content: `String appointmentId = appointment.getAppointmentId();
+
+if (appointments.containsKey(appointmentId)) {
+    throw new IllegalArgumentException("Appointment ID must be unique");
+}
+
+appointments.put(appointmentId, appointment);`,
+        },
+        {
         filename: "AppointmentServiceTest.java",
         caption:
-          "This test adds one appointment, then verifies that adding another with the same ID throws an IllegalArgumentException. The helper supplies a date one day in the future.",
+          "Both appointments have valid descriptions and dates one day in the future, so the duplicate ID is the condition being tested. After adding the first appointment, assertThrows verifies that adding the second raises an IllegalArgumentException.",
         content: `@Test
 public void testAddDuplicateAppointmentIdThrowsException() {
     AppointmentService service = new AppointmentService();
@@ -66,7 +79,8 @@ public void testAddDuplicateAppointmentIdThrowsException() {
         service.addAppointment(appointment2);
     });
 }`,
-      },
+        },
+      ],
     },
   },
 
@@ -193,17 +207,17 @@ export default async function SkillPage({ params }: SkillPageProps) {
                 </article>
               ))}
             </div>
-            {skill.caseStudy.code && (
-              <figure className="mt-8 min-w-0 overflow-hidden rounded-xl border border-slate-800">
+            {skill.caseStudy.code?.map((example) => (
+              <figure key={example.filename} className="mt-8 min-w-0 overflow-hidden rounded-xl border border-slate-800">
                 <figcaption className="border-b border-slate-800 bg-slate-900 p-6">
-                  <p className="break-words font-mono text-sm text-cyan-400">{skill.caseStudy.code.filename}</p>
-                  <p className="mt-3 leading-7 text-slate-400">{skill.caseStudy.code.caption}</p>
+                  <p className="break-words font-mono text-sm text-cyan-400">{example.filename}</p>
+                  <p className="mt-3 leading-7 text-slate-400">{example.caption}</p>
                 </figcaption>
-                <pre tabIndex={0} aria-label="Java test code example" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400">
-                  <code>{skill.caseStudy.code.content}</code>
+                <pre tabIndex={0} aria-label={`Code excerpt from ${example.filename}`} className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400">
+                  <code>{example.content}</code>
                 </pre>
               </figure>
-            )}
+            ))}
             {slug === "web-development" && (
               <>
             <Link
