@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 type ProjectCardProps = {
+  href: string;
   title: string;
   technology: string;
   description: string;
@@ -6,13 +9,19 @@ type ProjectCardProps = {
 };
 
 export default function ProjectCard({
+  href,
   title,
   technology,
   description,
   highlights,
 }: ProjectCardProps) {
   return (
-    <article className="rounded-xl border border-slate-800 bg-slate-900 p-6">
+    <article className="h-full">
+      <Link
+        href={href}
+        aria-label={`${title}: explore this skill`}
+        className="group flex h-full flex-col rounded-xl border border-slate-800 bg-slate-900 p-6 transition hover:border-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+      >
       <p className="text-sm font-semibold uppercase tracking-wider text-cyan-400">
         {technology}
       </p>
@@ -29,6 +38,10 @@ export default function ProjectCard({
           </li>
         ))}
       </ul>
+      <span className="mt-auto block pt-6 text-sm font-semibold text-cyan-400 group-hover:text-cyan-300">
+        Explore this skill <span aria-hidden="true">→</span>
+      </span>
+      </Link>
     </article>
   );
 }

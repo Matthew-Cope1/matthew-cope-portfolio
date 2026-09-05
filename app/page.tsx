@@ -89,6 +89,7 @@ export default function Home() {
   <div className="mt-10 grid gap-6 md:grid-cols-2">
     <ProjectCard
       title="Interactive 3D Graphics Application"
+      href="/skills/cpp"
       technology="C++ • OpenGL"
       description="An interactive three-dimensional scene built with reusable objects, textures, lighting, transformations, and camera controls."
       highlights={[
@@ -100,6 +101,7 @@ export default function Home() {
 
     <ProjectCard
       title="Software Testing and Quality Assurance"
+      href="/skills/java"
       technology="Java • JUnit"
       description="A collection of application services developed and tested from detailed software requirements."
       highlights={[
@@ -111,6 +113,7 @@ export default function Home() {
 
     <ProjectCard
       title="Secure Software Refactoring"
+      href="/skills/java"
       technology="Java • Spring Boot"
       description="A financial-services application reviewed and updated to improve data integrity and secure communication."
       highlights={[
@@ -122,6 +125,7 @@ export default function Home() {
 
     <ProjectCard
       title="Course Planner"
+      href="/skills/cpp"
       technology="C++ • Data Structures"
       description="A command-line application that loads, organizes, searches, and displays course information."
       highlights={[

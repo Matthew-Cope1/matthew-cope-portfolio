@@ -1,26 +1,35 @@
+import Link from "next/link";
+
 export default function Navbar() {
   return (
-    <nav className="mx-auto flex max-w-6xl items-center justify-between py-6">
-      <a href="/" className="text-xl font-bold text-white">
+    <nav
+      aria-label="Main navigation"
+      className="mx-auto flex max-w-6xl flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <Link
+        href="/"
+        aria-label="Matthew Cope home"
+        className="inline-flex min-h-11 min-w-11 items-center self-start rounded-lg text-xl font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+      >
         MC
-      </a>
+      </Link>
 
-      <div className="flex items-center gap-6 text-sm text-slate-300">
-        <a href="/#skills" className="transition hover:text-cyan-400">
+      <div className="grid w-full grid-cols-2 gap-2 text-sm text-slate-300 sm:flex sm:w-auto sm:items-center sm:gap-3">
+        <Link href="/#skills" className="inline-flex min-h-11 items-center justify-center rounded-lg px-3 py-2 transition hover:bg-slate-900 hover:text-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400">
           Skills
-        </a>
+        </Link>
 
-        <a href="/#projects" className="transition hover:text-cyan-400">
+        <Link href="/#projects" className="inline-flex min-h-11 items-center justify-center rounded-lg px-3 py-2 transition hover:bg-slate-900 hover:text-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400">
           Projects
-        </a>
+        </Link>
 
-        <a href="/#experience" className="transition hover:text-cyan-400">
+        <Link href="/#experience" className="inline-flex min-h-11 items-center justify-center rounded-lg px-3 py-2 transition hover:bg-slate-900 hover:text-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400">
           Experience
-        </a>
+        </Link>
 
-        <a href="/#contact" className="rounded-lg bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300"> 
+        <Link href="/#contact" className="inline-flex min-h-11 items-center justify-center rounded-lg bg-cyan-400 px-4 py-2 font-semibold text-slate-950 transition hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400">
           Contact
-        </a>
+        </Link>
       </div>
     </nav>
   );

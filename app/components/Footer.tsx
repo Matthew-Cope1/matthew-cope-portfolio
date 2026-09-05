@@ -19,12 +19,27 @@ export default function Footer() {
           mission-focused approach.
         </p>
 
-        <a
-          href="mailto:mtcope95@gmail.com"
-          className="mt-8 inline-block rounded-lg bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300"
-        >
-          Email Matthew
-        </a>
+        <div className="mt-8 flex flex-wrap gap-4">
+          <a
+            href="mailto:mtcope95@gmail.com"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+          >
+            Email Matthew
+          </a>
+          <a
+            href="https://github.com/Matthew-Cope1"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-700 px-6 py-3 font-semibold text-cyan-400 transition hover:border-cyan-400 hover:text-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+          >
+            GitHub Profile
+          </a>
+          <a
+            href="/Matthew_Cope_Resume_Software_Engineer.pdf"
+            download
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-700 px-6 py-3 font-semibold text-cyan-400 transition hover:border-cyan-400 hover:text-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
+          >
+            Download Résumé (PDF)
+          </a>
+        </div>
 
         <div className="mt-16 flex flex-col gap-2 border-t border-slate-800 pt-6 text-sm text-slate-500 sm:flex-row sm:justify-between">
           <p>Matthew T. Cope</p>
