@@ -112,14 +112,14 @@ export default function Home() {
     />
 
     <ProjectCard
-      title="Secure Software Refactoring"
+      title="SHA-256 Checksum Application"
       href="/skills/java"
       technology="Java • Spring Boot"
-      description="A financial-services application reviewed and updated to improve data integrity and secure communication."
+      description="A Spring Boot application that generates and displays a SHA-256 checksum for a fixed message through a web endpoint."
       highlights={[
-        "Implemented SHA-256 checksum verification",
-        "Configured HTTPS communication",
-        "Reviewed dependencies for known vulnerabilities",
+        "Generated a SHA-256 digest from UTF-8 input",
+        "Converted digest bytes to hexadecimal output",
+        "Displayed the input and checksum through /hash",
       ]}
     />
 

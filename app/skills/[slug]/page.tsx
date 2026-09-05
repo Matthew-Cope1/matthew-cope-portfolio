@@ -7,12 +7,13 @@ type Skill = {
   summary: string;
   technologies: string[];
   projects: string[];
-  caseStudy?: {
+  caseStudies?: {
     title: string;
     overview: string;
     decisions: { title: string; description: string }[];
     code?: { filename: string; caption: string; content: string }[];
-  };
+    output?: { input: string; algorithm: string; checksum: string };
+  }[];
 };
 
 const skills: Record<string, Skill> = {
@@ -21,10 +22,8 @@ const skills: Record<string, Skill> = {
     summary:
       "I use Java to create requirement-driven applications, automated tests, and secure software components.",
     technologies: ["Java", "JUnit", "Spring Boot", "SHA-256"],
-    projects: [
-      "Secure Software Refactoring",
-    ],
-    caseStudy: {
+    projects: [],
+    caseStudies: [{
       title: "Appointment Service — Software Testing and Quality Assurance",
       overview:
         "For my CS 320 coursework, I built an in-memory appointment service in Java and wrote JUnit tests for its validation and service behavior. The project translates appointment requirements into explicit checks and tests for both successful operations and rejected inputs.",
@@ -81,7 +80,52 @@ public void testAddDuplicateAppointmentIdThrowsException() {
 }`,
         },
       ],
-    },
+    }, {
+      title: "SHA-256 Checksum Generation",
+      output: {
+        input: "Hello Matthew Cope!",
+        algorithm: "SHA-256",
+        checksum: "272d39be83c493010ffd6e2f3c993633804d3c4a1a186d493c2df81384d38eaf",
+      },
+      overview:
+        "For my CS 305 coursework, I extended a Spring Boot starter application with a checksum helper and a /hash endpoint. The endpoint hashes the fixed message Hello Matthew Cope! and displays the input, algorithm, and hexadecimal result.",
+      decisions: [
+        {
+          title: "Explicit input encoding",
+          description:
+            "The helper converts the input to UTF-8 bytes before passing it to MessageDigest. Specifying the encoding keeps the byte representation consistent across systems.",
+        },
+        {
+          title: "Readable hexadecimal output",
+          description:
+            "The digest bytes are formatted with %02x and appended to a StringBuilder. Each byte contributes two hexadecimal characters, preserving leading zeros in the displayed checksum.",
+        },
+        {
+          title: "Separate hashing from the endpoint",
+          description:
+            "calculateHash accepts the input and algorithm, while the /hash handler selects SHA-256 and prepares the response. The helper declares NoSuchAlgorithmException for an unavailable algorithm.",
+        },
+        {
+          title: "Verification as a next step",
+          description:
+            "This version generates and displays a checksum; it does not compare it with a trusted expected value. The supplied test is a context-load test, so focused checksum tests would be a useful next addition, including a known input and expected digest.",
+        },
+      ],
+      code: [{
+        filename: "ServerApplication.java",
+        caption:
+          "Core excerpt from calculateHash: select the requested algorithm, hash the UTF-8 input, and convert the resulting bytes to a hexadecimal string. The /hash endpoint calls this helper with SHA-256.",
+        content: `MessageDigest md = MessageDigest.getInstance(algorithm);
+byte[] digest = md.digest(input.getBytes(StandardCharsets.UTF_8));
+
+StringBuilder hexString = new StringBuilder(digest.length * 2);
+for (byte b : digest) {
+    hexString.append(String.format("%02x", b));
+}
+
+return hexString.toString();`,
+      }],
+    }],
   },
 
   python: {
@@ -104,7 +148,7 @@ public void testAddDuplicateAppointmentIdThrowsException() {
     projects: [
       "FlightPath Military Career Platform",
     ],
-    caseStudy: {
+    caseStudies: [{
       title: "Matthew Cope Portfolio",
       overview:
         "I built this portfolio to help prospective employers explore my software projects, technical skills, and Air Force experience in one place. Visitors can move from project summaries to related skill pages, visit my GitHub profile, and download my résumé.",
@@ -140,7 +184,7 @@ public void testAddDuplicateAppointmentIdThrowsException() {
             "TypeScript checks help catch mismatched component props, while ESLint checks the source for common issues. These checks support development; they do not replace checking the interface in a browser.",
         },
       ],
-    },
+    }],
   },
 };
 
@@ -188,26 +232,48 @@ export default async function SkillPage({ params }: SkillPageProps) {
           {skill.summary}
         </p>
 
-        {skill.caseStudy && (
-          <section className="mt-16 min-w-0" aria-labelledby="featured-case-study">
+        {skill.caseStudies?.map((caseStudy, index) => (
+          <section className="mt-16 min-w-0" key={caseStudy.title} aria-labelledby={`case-study-${index}`}>
             <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
               Featured Case Study
             </p>
-            <h2 id="featured-case-study" className="mt-4 text-3xl font-bold">
-              {skill.caseStudy.title}
+            <h2 id={`case-study-${index}`} className="mt-4 text-3xl font-bold">
+              {caseStudy.title}
             </h2>
             <p className="mt-6 max-w-3xl leading-8 text-slate-300">
-              {skill.caseStudy.overview}
+              {caseStudy.overview}
             </p>
             <div className="mt-8 grid gap-6 md:grid-cols-2">
-              {skill.caseStudy.decisions.map((decision) => (
+              {caseStudy.decisions.map((decision) => (
                 <article key={decision.title} className="rounded-xl border border-slate-800 bg-slate-900 p-6">
                   <h3 className="text-xl font-semibold">{decision.title}</h3>
                   <p className="mt-3 leading-7 text-slate-400">{decision.description}</p>
                 </article>
               ))}
             </div>
-            {skill.caseStudy.code?.map((example) => (
+            {caseStudy.output && (
+              <section className="mt-8 rounded-xl border border-slate-800 bg-slate-900 p-6">
+                <h3 className="text-xl font-semibold">Example input and output</h3>
+                <p className="mt-3 leading-7 text-slate-400">
+                  Expected checksum for the exact UTF-8 message below, with no trailing newline.
+                </p>
+                <dl className="mt-6 space-y-4">
+                  <div>
+                    <dt className="text-sm font-semibold text-cyan-400">Input</dt>
+                    <dd className="mt-1 font-mono text-slate-300">{caseStudy.output.input}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-semibold text-cyan-400">Algorithm</dt>
+                    <dd className="mt-1 text-slate-300">{caseStudy.output.algorithm}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-sm font-semibold text-cyan-400">Checksum</dt>
+                    <dd className="mt-1 break-all font-mono text-sm leading-7 text-slate-300">{caseStudy.output.checksum}</dd>
+                  </div>
+                </dl>
+              </section>
+            )}
+            {caseStudy.code?.map((example) => (
               <figure key={example.filename} className="mt-8 min-w-0 overflow-hidden rounded-xl border border-slate-800">
                 <figcaption className="border-b border-slate-800 bg-slate-900 p-6">
                   <p className="break-words font-mono text-sm text-cyan-400">{example.filename}</p>
@@ -235,7 +301,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
               </>
             )}
           </section>
-        )}
+        ))}
 
         <section className="mt-16">
           <h2 className="text-3xl font-bold">Technologies</h2>
@@ -252,6 +318,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
           </div>
         </section>
 
+        {skill.projects.length > 0 && (
         <section className="mt-16">
           <h2 className="text-3xl font-bold">Projects demonstrating this skill</h2>
 
@@ -271,6 +338,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
             ))}
           </div>
         </section>
+        )}
       </section>
     </main>
   );
