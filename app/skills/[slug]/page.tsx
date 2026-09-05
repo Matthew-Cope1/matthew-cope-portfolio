@@ -11,6 +11,7 @@ type Skill = {
     title: string;
     overview: string;
     decisions: { title: string; description: string }[];
+    code?: { filename: string; caption: string; content: string };
   };
 };
 
@@ -21,9 +22,52 @@ const skills: Record<string, Skill> = {
       "I use Java to create requirement-driven applications, automated tests, and secure software components.",
     technologies: ["Java", "JUnit", "Spring Boot", "SHA-256"],
     projects: [
-      "Software Testing and Quality Assurance",
       "Secure Software Refactoring",
     ],
+    caseStudy: {
+      title: "Appointment Service — Software Testing and Quality Assurance",
+      overview:
+        "For my CS 320 coursework, I built an in-memory appointment service in Java and wrote JUnit tests for its validation and service behavior. The project translates appointment requirements into explicit checks and tests for both successful operations and rejected inputs.",
+      decisions: [
+        {
+          title: "Validation in the model",
+          description:
+            "Appointment validates IDs of up to 10 characters, descriptions of up to 50 characters, and dates that are not in the past. Null values are rejected. Description and date setters repeat their validation so updates follow the same rules as construction.",
+        },
+        {
+          title: "Separate service responsibilities",
+          description:
+            "AppointmentService stores appointments in a HashMap keyed by ID. It rejects null appointments and duplicate IDs on insertion, and rejects null or unknown IDs on deletion. The appointment ID is final and has no setter.",
+        },
+        {
+          title: "19 JUnit test methods",
+          description:
+            "AppointmentTest contains 13 tests for construction, getters, and updates. AppointmentServiceTest adds six tests for successful insertion and deletion, duplicate IDs, null inputs, and missing IDs. Assertions check values, expected exceptions, and operations that should complete without throwing.",
+        },
+        {
+          title: "Further improvements",
+          description:
+            "Next steps include testing the exact 10- and 50-character limits and verifying stored state after service operations. Defensive copies of mutable Date values would prevent callers from changing a date outside the validation methods; a controllable clock would make time-based tests more predictable.",
+        },
+      ],
+      code: {
+        filename: "AppointmentServiceTest.java",
+        caption:
+          "This test adds one appointment, then verifies that adding another with the same ID throws an IllegalArgumentException. The helper supplies a date one day in the future.",
+        content: `@Test
+public void testAddDuplicateAppointmentIdThrowsException() {
+    AppointmentService service = new AppointmentService();
+    Appointment appointment1 = new Appointment("A123", "Doctor visit", futureDate());
+    Appointment appointment2 = new Appointment("A123", "Meeting", futureDate());
+
+    service.addAppointment(appointment1);
+
+    assertThrows(IllegalArgumentException.class, () -> {
+        service.addAppointment(appointment2);
+    });
+}`,
+      },
+    },
   },
 
   python: {
@@ -131,11 +175,11 @@ export default async function SkillPage({ params }: SkillPageProps) {
         </p>
 
         {skill.caseStudy && (
-          <section className="mt-16" aria-labelledby="portfolio-case-study">
+          <section className="mt-16 min-w-0" aria-labelledby="featured-case-study">
             <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
               Featured Case Study
             </p>
-            <h2 id="portfolio-case-study" className="mt-4 text-3xl font-bold">
+            <h2 id="featured-case-study" className="mt-4 text-3xl font-bold">
               {skill.caseStudy.title}
             </h2>
             <p className="mt-6 max-w-3xl leading-8 text-slate-300">
@@ -149,6 +193,19 @@ export default async function SkillPage({ params }: SkillPageProps) {
                 </article>
               ))}
             </div>
+            {skill.caseStudy.code && (
+              <figure className="mt-8 min-w-0 overflow-hidden rounded-xl border border-slate-800">
+                <figcaption className="border-b border-slate-800 bg-slate-900 p-6">
+                  <p className="break-words font-mono text-sm text-cyan-400">{skill.caseStudy.code.filename}</p>
+                  <p className="mt-3 leading-7 text-slate-400">{skill.caseStudy.code.caption}</p>
+                </figcaption>
+                <pre tabIndex={0} aria-label="Java test code example" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400">
+                  <code>{skill.caseStudy.code.content}</code>
+                </pre>
+              </figure>
+            )}
+            {slug === "web-development" && (
+              <>
             <Link
               href="/"
               className="mt-8 inline-flex min-h-11 items-center rounded-lg bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
@@ -161,6 +218,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
             >
               View source on GitHub
             </a>
+              </>
+            )}
           </section>
         )}
 
