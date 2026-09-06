@@ -171,37 +171,7 @@ Thank you for using the course planner!`}</samp></pre>
           </div>
         </section>
 
-        <section className="mt-20">
-          <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
-            Featured Project
-          </p>
 
-          <h2 className="mt-4 text-3xl font-bold">
-            Breakout-Style 2D Application
-          </h2>
-
-          <p className="mt-4 max-w-3xl leading-7 text-slate-400">
-            This project demonstrates class-based design, multi-object
-            collision detection, randomized behavior, multi-ball interaction,
-            and debugging logic that prevents objects from becoming stuck.
-          </p>
-
-          <div className="mt-8 overflow-hidden rounded-xl border border-slate-800">
-            <div className="border-b border-slate-800 bg-slate-900 px-5 py-3">
-              <p className="font-mono text-sm text-slate-400">
-                Breakout code example
-              </p>
-            </div>
-
-            <pre className="overflow-x-auto bg-slate-950 p-6 text-sm leading-7 text-slate-300">
-              <code>
-                {
-                  "// We will add a real code example from the Breakout project here."
-                }
-              </code>
-            </pre>
-          </div>
-        </section>
       </section>
     </main>
   );

@@ -7,7 +7,6 @@ type Skill = {
   title: string;
   summary: string;
   technologies: string[];
-  projects: string[];
   caseStudies?: {
     title: string;
     overview: string;
@@ -25,7 +24,6 @@ const skills: Record<string, Skill> = {
     summary:
       "I use Java to create requirement-driven applications, automated tests, and secure software components.",
     technologies: ["Java", "JUnit", "Spring Boot", "SHA-256"],
-    projects: [],
     caseStudies: [{
       title: "Appointment Service — Software Testing and Quality Assurance",
       overview:
@@ -136,7 +134,6 @@ return hexString.toString();`,
     summary:
       "I use Python to process data, perform statistical analysis, create visualizations, and communicate evidence-based conclusions.",
     technologies: ["Python", "pandas", "SciPy", "statsmodels", "Matplotlib", "Jupyter"],
-    projects: ["Statistical Hypothesis Testing"],
     caseStudies: [{
       title: "NBA Performance Analysis — Comparing Regression Models",
       overview:
@@ -206,9 +203,6 @@ print(model3.summary())`,
     summary:
       "I build responsive interfaces with reusable components, typed data, modern routing, and version-controlled development workflows.",
     technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-    projects: [
-      "FlightPath Military Career Platform",
-    ],
     caseStudies: [{
       title: "Matthew Cope Portfolio",
       overview:
@@ -419,27 +413,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
           </div>
         </section>
 
-        {skill.projects.length > 0 && (
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold">Projects demonstrating this skill</h2>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {skill.projects.map((project) => (
-              <article
-                key={project}
-                className="rounded-xl border border-slate-800 bg-slate-900 p-6"
-              >
-                <h3 className="text-xl font-semibold">{project}</h3>
-
-                <p className="mt-3 text-slate-400">
-                  Project details and selected code will be added as the
-                  portfolio develops.
-                </p>
-              </article>
-            ))}
-          </div>
-        </section>
-        )}
       </section>
     </main>
   );
