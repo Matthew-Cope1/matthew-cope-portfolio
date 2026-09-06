@@ -137,12 +137,12 @@ export default function Home() {
 
     <ProjectCard
       title="Course Planner"
-      href="/skills/cpp"
+      href="/skills/cpp#course-planner"
       technology="C++ • Data Structures"
       description="A command-line application that loads, organizes, searches, and displays course information."
       highlights={[
         "Parsed structured data from an input file",
-        "Stored course information in a binary search tree",
+        "Indexed courses in an ordered std::map",
         "Implemented searching and sorted output",
       ]}
     />
