@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Navbar from "./components/Navbar";
 import SkillCard from "./components/SkillCard";
 import ProjectCard from "./components/ProjectCard";

@@ -1,3 +1,4 @@
+import CodeExample from "../../components/CodeExample";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 
@@ -83,34 +84,37 @@ export default function CppSkillPage() {
               <li className="rounded-xl border border-slate-800 p-4">3. List ordered courses or search for prerequisites.</li>
             </ol>
           </div>
-          <figure className="mt-8 overflow-hidden rounded-xl border border-slate-800">
-            <figcaption className="bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold">Load structured course data</h3>
-              <p className="mt-3 leading-7 text-slate-400">First three rows from the supplied CSV. Each row contains a course number, title, and optional prerequisites. CSCI300 references CSCI200, which appears later in the file; validation waits until loading finishes.</p>
-            </figcaption>
-            <pre tabIndex={0} aria-label="Course CSV sample" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400"><code>{`MATH201,Discrete Mathematics,,
+          <CodeExample
+            heading
+            title="Load structured course data"
+            caption="First three rows from the supplied CSV. Each row contains a course number, title, and optional prerequisites. CSCI300 references CSCI200, which appears later in the file; validation waits until loading finishes."
+            ariaLabel="Course CSV sample"
+            terminal={false}
+            content={`MATH201,Discrete Mathematics,,
 CSCI300,Introduction to Algorithms,CSCI200,MATH201
-CSCI350,Operating Systems,CSCI300,`}</code></pre>
-          </figure>
-          <figure className="mt-8 overflow-hidden rounded-xl border border-slate-800">
-            <figcaption className="bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold">Represent and organize courses</h3>
-              <p className="mt-3 leading-7 text-slate-400">The Course definition and map declaration from main.cpp, shown together. The vector supports multiple prerequisites, while the map uses course numbers as ordered keys.</p>
-            </figcaption>
-            <pre tabIndex={0} aria-label="C++ course structure and storage" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400"><code>{`struct Course {
+CSCI350,Operating Systems,CSCI300,`}
+          />
+          <CodeExample
+            heading
+            title="Represent and organize courses"
+            caption="The Course definition and map declaration from main.cpp, shown together. The vector supports multiple prerequisites, while the map uses course numbers as ordered keys."
+            ariaLabel="C++ course structure and storage"
+            terminal={false}
+            content={`struct Course {
     string courseNumber;
     string courseTitle;
     vector<string> prerequisites;
 };
 
-map<string, Course> courseMap;`}</code></pre>
-          </figure>
-          <figure className="mt-8 overflow-hidden rounded-xl border border-slate-800">
-            <figcaption className="bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold">Normalize before searching</h3>
-              <p className="mt-3 leading-7 text-slate-400">Excerpt from printCourseInfo in main.cpp. The normalized key is used for lookup, and an unsuccessful search returns before accessing a course.</p>
-            </figcaption>
-            <pre tabIndex={0} aria-label="C++ course lookup excerpt" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400"><code>{String.raw`string key = normalizeCourseKey(userInput);
+map<string, Course> courseMap;`}
+          />
+          <CodeExample
+            heading
+            title="Normalize before searching"
+            caption="Excerpt from printCourseInfo in main.cpp. The normalized key is used for lookup, and an unsuccessful search returns before accessing a course."
+            ariaLabel="C++ course lookup excerpt"
+            terminal={false}
+            content={String.raw`string key = normalizeCourseKey(userInput);
 auto it = courseMap.find(key);
 
 if (it == courseMap.end()) {
@@ -118,14 +122,15 @@ if (it == courseMap.end()) {
     return;
 }
 
-const Course& c = it->second;`}</code></pre>
-          </figure>
-          <figure className="mt-8 overflow-hidden rounded-xl border border-slate-800">
-            <figcaption className="bg-slate-900 p-6">
-              <h3 className="text-xl font-semibold">A complete planner session</h3>
-              <p className="mt-3 leading-7 text-slate-400">Condensed transcript from a verified run, with entered commands shown and repeated menus omitted. It covers the load-first guard, all eight courses in sorted order, normalized lookup, and an unknown course.</p>
-            </figcaption>
-            <pre tabIndex={0} aria-label="Course planner terminal output" className="overflow-x-auto p-6 text-sm leading-7 text-slate-300 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-cyan-400"><samp>{`Welcome to the course planner.
+const Course& c = it->second;`}
+          />
+          <CodeExample
+            heading
+            title="A complete planner session"
+            caption="Condensed transcript from a verified run, with entered commands shown and repeated menus omitted. It covers the load-first guard, all eight courses in sorted order, normalized lookup, and an unknown course."
+            ariaLabel="Course planner terminal output"
+            terminal={true}
+            content={`Welcome to the course planner.
 1. Load Data Structure.
 2. Print Course List.
 3. Print Course.
@@ -158,8 +163,8 @@ What course do you want to know about? BAD
 Course not found.
 
 What would you like to do? 9
-Thank you for using the course planner!`}</samp></pre>
-          </figure>
+Thank you for using the course planner!`}
+          />
           <div className="mt-8 max-w-3xl">
             <h3 className="text-xl font-semibold">Validation and next steps</h3>
             <p className="mt-3 leading-7 text-slate-400">
