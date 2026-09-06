@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "../../components/Navbar";
@@ -12,6 +13,8 @@ type Skill = {
     overview: string;
     decisions: { title: string; description: string }[];
     code?: { filename: string; caption: string; content: string }[];
+    chart?: { src: string; alt: string; caption: string; width: number; height: number };
+    models?: { name: string; rSquared: string; adjusted: string }[];
     output?: { input: string; algorithm: string; checksum: string };
   }[];
 };
@@ -132,12 +135,70 @@ return hexString.toString();`,
     title: "Python and Data Analysis",
     summary:
       "I use Python to process data, perform statistical analysis, create visualizations, and communicate evidence-based conclusions.",
-    technologies: ["Python", "pandas", "SciPy", "Jupyter"],
-    projects: [
-      "NBA Performance Analysis",
-      "Regression Analysis",
-      "Statistical Hypothesis Testing",
-    ],
+    technologies: ["Python", "pandas", "SciPy", "statsmodels", "Matplotlib", "Jupyter"],
+    projects: ["Statistical Hypothesis Testing"],
+    caseStudies: [{
+      title: "NBA Performance Analysis — Comparing Regression Models",
+      overview:
+        "For MAT 243, I explored how season-level basketball metrics relate to regular-season wins using a guided notebook and a written summary report. I completed correlation and regression steps and extended the analysis to a four-predictor model using 618 team-season observations from 1995–2015. The figures and results come from the saved notebook export; my report interprets their implications for coaches and management.",
+      decisions: [
+        {
+          title: "Load and inspect the data",
+          description:
+            "The notebook loads nba_wins_data.csv with pandas, displays the first five rows, and checks the observation count. Each row contains a team's season-level scoring, relative skill, differentials, and total wins.",
+        },
+        {
+          title: "Compare relationships",
+          description:
+            "Scatterplots and SciPy Pearson correlations show a stronger positive association between average relative skill and wins (r = 0.9072) than between average points scored and wins (r = 0.4777). These associations do not establish cause and effect.",
+        },
+        {
+          title: "Extend the regression model",
+          description:
+            "Using statsmodels, I fitted a relative-skill model, added average points, then included point and relative-skill differentials. The four-predictor model has the highest recorded R² at 0.878, explaining 87.8% of the observed variation in wins within this dataset.",
+        },
+        {
+          title: "Evaluate individual predictors",
+          description:
+            "My report distinguishes the overall F-test from individual coefficient tests. The four-predictor model is significant overall; at a 0.01 significance level, average points and both differentials are significant, while average relative skill is not (p = 0.442). Its strong standalone correlation does not guarantee that it contributes additional information once the other metrics are included.",
+        },
+        {
+          title: "Translate findings for management",
+          description:
+            "My takeaway for coaches was to consider scoring alongside performance relative to opponents. Point differential captures how consistently a team outscores its opponents, adding context that points scored alone misses. These historical associations can inform team evaluation, while forecasts for future seasons still need separate validation.",
+        },
+        {
+          title: "Interpret the limits",
+          description:
+            "The export contains no held-out evaluation, so these results do not establish accuracy on future seasons. The full model reports a large condition number, and average relative skill has a p-value of 0.442 after accounting for the other predictors. Checking predictor overlap, residuals, and performance on later seasons would be useful next steps.",
+        },
+      ],
+      chart: {
+        src: "/nba-wins-relative-skill.png",
+        width: 488,
+        height: 283,
+        alt: "Scatterplot of average relative skill versus total season wins, showing a strong upward trend with some outliers.",
+        caption: "Original Matplotlib output from the notebook. Teams with higher average relative skill generally recorded more wins; the saved Pearson correlation is 0.9072.",
+      },
+      models: [
+        { name: "Average relative skill", rSquared: "0.823", adjusted: "0.823" },
+        { name: "Average points + relative skill", rSquared: "0.837", adjusted: "0.837" },
+        { name: "Points + relative skill + both differentials", rSquared: "0.878", adjusted: "0.877" },
+      ],
+      code: [{
+        filename: "Project Three notebook — Step 6",
+        caption:
+          "The four-predictor regression cell, with its formula wrapped for readability. total_wins is the response; the terms after ~ are predictors. fit() estimates the model and summary() displays coefficients and fit statistics.",
+        content: `import statsmodels.formula.api as smf
+
+model3 = smf.ols(
+    'total_wins ~ avg_pts_differential + avg_elo_differential '
+    '+ avg_pts + avg_elo_n',
+    nba_wins_df
+).fit()
+print(model3.summary())`,
+      }],
+    }],
   },
 
   "web-development": {
@@ -251,6 +312,46 @@ export default async function SkillPage({ params }: SkillPageProps) {
                 </article>
               ))}
             </div>
+            {caseStudy.chart && (
+              <figure className="mt-8 overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
+                <div className="bg-white p-4">
+                  <Image
+                    src={caseStudy.chart.src}
+                    alt={caseStudy.chart.alt}
+                    width={caseStudy.chart.width}
+                    height={caseStudy.chart.height}
+                    className="mx-auto h-auto w-full max-w-[488px]"
+                    sizes="(max-width: 560px) 100vw, 488px"
+                  />
+                </div>
+                <figcaption className="p-6 leading-7 text-slate-400">{caseStudy.chart.caption}</figcaption>
+              </figure>
+            )}
+            {caseStudy.models && (
+              <div className="mt-8 overflow-x-auto rounded-xl border border-slate-800">
+                <table className="w-full text-left text-sm text-slate-300">
+                  <caption className="p-6 text-left leading-7 text-slate-400">
+                    Model comparison from saved output: all three models use 618 observations. R² measures fit to the analyzed data, not prediction accuracy on new data.
+                  </caption>
+                  <thead className="bg-slate-900">
+                    <tr>
+                      <th scope="col" className="p-4">Predictors</th>
+                      <th scope="col" className="p-4">R²</th>
+                      <th scope="col" className="p-4">Adjusted R²</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {caseStudy.models.map((model) => (
+                      <tr key={model.name} className="border-t border-slate-800">
+                        <th scope="row" className="p-4 font-normal">{model.name}</th>
+                        <td className="p-4 font-mono">{model.rSquared}</td>
+                        <td className="p-4 font-mono">{model.adjusted}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
             {caseStudy.output && (
               <section className="mt-8 rounded-xl border border-slate-800 bg-slate-900 p-6">
                 <h3 className="text-xl font-semibold">Example input and output</h3>
