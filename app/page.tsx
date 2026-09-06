@@ -124,6 +124,18 @@ export default function Home() {
     />
 
     <ProjectCard
+      title="NBA Performance Regression Analysis"
+      href="/skills/python"
+      technology="Python • pandas • statsmodels"
+      description="An analysis of historical NBA team performance using correlation, visualization, and regression to explore relationships with regular-season wins."
+      highlights={[
+        "Analyzed 618 team-season observations from 1995–2015",
+        "Compared three regression models and their fit",
+        "Interpreted results and limitations for coaches and management",
+      ]}
+    />
+
+    <ProjectCard
       title="Course Planner"
       href="/skills/cpp"
       technology="C++ • Data Structures"
